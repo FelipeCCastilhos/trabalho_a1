@@ -1,58 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Locadora Rota Livre
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicacao web em Laravel para gerenciamento simples de uma locadora de carros.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Dashboard com resumo de clientes ativos, veiculos, locacoes ativas, disponibilidade e receita finalizada.
+- CRUD de clientes.
+- CRUD de veiculos.
+- CRUD de locacoes.
+- Busca nas listagens de clientes, veiculos e locacoes.
+- Validacoes de cadastro, datas, placa, valores e relacionamentos.
+- Dados iniciais para demonstracao usando seeders.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Modelagem
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Entidades principais:
 
-## Learning Laravel
+- `clientes`: dados do motorista, CPF, CNH, contato e status.
+- `veiculos`: dados da frota, placa, categoria, diaria e status.
+- `locacoes`: vincula um cliente a um veiculo em um periodo, com status e valores.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Relacionamentos:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Um cliente possui muitas locacoes.
+- Um veiculo possui muitas locacoes.
+- Uma locacao pertence a um cliente e a um veiculo.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Regras de negocio
 
-## Agentic Development
+- Nao e possivel excluir cliente ou veiculo que ja tenha locacoes vinculadas.
+- Um veiculo nao pode ter duas locacoes ativas no mesmo periodo.
+- Um cliente pode ter no maximo 2 locacoes ativas.
+- Veiculos em manutencao ou inativos nao podem ser locados.
+- Locacoes em andamento ou finalizadas nao podem ser excluidas.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Requisitos
+
+- PHP 8.3 ou superior.
+- Composer.
+- SQLite habilitado no PHP.
+
+## Setup e execucao
+
+1. Instale as dependencias PHP:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Crie o arquivo `.env` se ele ainda nao existir:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+No Windows PowerShell:
 
-## Code of Conduct
+```powershell
+Copy-Item .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. Gere a chave da aplicacao:
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. Crie o banco SQLite caso necessario:
 
-## License
+```bash
+php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. Execute migrations e seeders:
+
+```bash
+php artisan migrate --seed
+```
+
+6. Inicie o servidor local:
+
+```bash
+php artisan serve
+```
+
+Acesse `http://127.0.0.1:8000`.
+
+## Testes
+
+Para executar os testes automatizados:
+
+```bash
+php artisan test
+```
