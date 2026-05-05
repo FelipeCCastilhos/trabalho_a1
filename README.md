@@ -43,8 +43,10 @@ Relacionamentos:
 
 0.5 Clone o repositório do git
 
+```bash
 git clone https://github.com/FelipeCCastilhos/trabalho_a1.git
 cd <PASTA_DO_PROJETO>
+```
 
 1. Instale as dependencias PHP:
 
