@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Cache em banco: util para o Laravel guardar dados temporarios sem
+        // depender de Redis ou outro servico externo no trabalho local.
         Schema::create('cache', function (Blueprint $table) {
             $table->string('key')->primary();
             $table->mediumText('value');
             $table->bigInteger('expiration')->index();
         });
 
+        // Locks evitam que dois processos alterem o mesmo item de cache ao mesmo tempo.
         Schema::create('cache_locks', function (Blueprint $table) {
             $table->string('key')->primary();
             $table->string('owner');

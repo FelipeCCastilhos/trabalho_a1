@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Nova locacao - Locadora Rota Livre')
+@section('title', 'Nova locacao - Locadora Prendatta')
 
 @section('content')
+    {{-- Criacao da locacao: tela onde as regras de disponibilidade serao validadas no controller. --}}
     <div class="page-header">
         <div>
             <h1>Nova locacao</h1>

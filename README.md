@@ -1,5 +1,4 @@
-# Locadora Rota Livre
-
+# Locadora Prendatta
 Aplicacao web em Laravel para gerenciamento simples de uma locadora de carros.
 
 ## Funcionalidades

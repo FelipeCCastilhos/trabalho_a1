@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Editar locacao - Locadora Rota Livre')
+@section('title', 'Editar locacao - Locadora Prendatta')
 
 @section('content')
+    {{-- Edicao da locacao: usada para alterar periodo, status ou finalizar devolucao. --}}
     <div class="page-header">
         <div>
             <h1>Editar locacao</h1>

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Novo veiculo - Locadora Rota Livre')
+@section('title', 'Novo veiculo - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de criacao de veiculo: alimenta a frota disponivel para locacoes. --}}
     <div class="page-header">
         <div>
             <h1>Novo veiculo</h1>

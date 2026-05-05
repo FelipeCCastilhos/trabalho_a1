@@ -1,8 +1,10 @@
 @php($locacao = $locacao ?? null)
 
+{{-- Formulario parcial compartilhado por criacao e edicao de locacoes. --}}
 <div class="field-row">
     <div class="field">
         <label for="cliente_id">Cliente</label>
+        {{-- Select vem do controller para listar apenas clientes ativos, exceto na edicao do registro atual. --}}
         <select id="cliente_id" name="cliente_id" required>
             <option value="">Selecione</option>
             @foreach ($clientes as $cliente)
@@ -15,6 +17,7 @@
     </div>
     <div class="field">
         <label for="veiculo_id">Veiculo</label>
+        {{-- Select vem do controller para priorizar veiculos disponiveis e reduzir erro do usuario. --}}
         <select id="veiculo_id" name="veiculo_id" required>
             <option value="">Selecione</option>
             @foreach ($veiculos as $veiculo)
@@ -43,6 +46,7 @@
 <div class="field-row">
     <div class="field">
         <label for="status">Status</label>
+        {{-- Status define se a locacao entra nas regras de conflito e limite ativo. --}}
         <select id="status" name="status" required>
             @foreach (\App\Models\Locacao::STATUS_LABELS as $valor => $label)
                 <option value="{{ $valor }}" @selected(old('status', $locacao->status ?? \App\Models\Locacao::STATUS_RESERVADA) === $valor)>{{ $label }}</option>

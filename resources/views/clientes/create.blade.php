@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Novo cliente - Locadora Rota Livre')
+@section('title', 'Novo cliente - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de criacao do cliente: usa o mesmo formulario parcial da edicao. --}}
     <div class="page-header">
         <div>
             <h1>Novo cliente</h1>

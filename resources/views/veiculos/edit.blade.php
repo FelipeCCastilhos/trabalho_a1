@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Editar veiculo - Locadora Rota Livre')
+@section('title', 'Editar veiculo - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de edicao de veiculo: permite alterar dados da frota e status operacional. --}}
     <div class="page-header">
         <div>
             <h1>Editar veiculo</h1>

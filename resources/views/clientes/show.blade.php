@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Cliente - Locadora Rota Livre')
+@section('title', 'Cliente - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de detalhe: concentra os dados do cliente e o historico de locacoes relacionadas. --}}
     <div class="page-header">
         <div>
             <h1>{{ $cliente->nome }}</h1>
@@ -25,6 +26,7 @@
         </div>
     </section>
 
+    {{-- Historico mostra o relacionamento 1:N entre cliente e locacoes. --}}
     <section class="panel" style="margin-top: 16px;">
         <h2>Locacoes do cliente</h2>
         <table>

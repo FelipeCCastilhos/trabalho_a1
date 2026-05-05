@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Clientes - Locadora Rota Livre')
+@section('title', 'Clientes - Locadora Prendatta')
 
 @section('content')
+    {{-- Listagem de clientes: representa o "Read" do CRUD e inclui busca obrigatoria. --}}
     <div class="page-header">
         <div>
             <h1>Clientes</h1>
@@ -13,6 +14,7 @@
         </div>
     </div>
 
+    {{-- Filtro GET preserva a busca na URL e funciona junto com a paginacao. --}}
     <div class="toolbar">
         <form class="search" method="GET" action="{{ route('clientes.index') }}">
             <input type="search" name="busca" value="{{ $busca }}" placeholder="Buscar por nome, CPF, email ou telefone">
@@ -23,6 +25,7 @@
         </form>
     </div>
 
+    {{-- Tabela mostra dados essenciais e a quantidade de locacoes para apoiar as regras de exclusao. --}}
     <section class="panel">
         <table>
             <thead>

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Veiculo - Locadora Rota Livre')
+@section('title', 'Veiculo - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de detalhe: mostra dados do carro e seu historico de uso. --}}
     <div class="page-header">
         <div>
             <h1>{{ $veiculo->marca }} {{ $veiculo->modelo }}</h1>
@@ -25,6 +26,7 @@
         </div>
     </section>
 
+    {{-- Historico demonstra o relacionamento 1:N entre veiculo e locacoes. --}}
     <section class="panel" style="margin-top: 16px;">
         <h2>Historico de locacoes</h2>
         <table>

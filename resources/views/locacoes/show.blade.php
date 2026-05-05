@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Locacao - Locadora Rota Livre')
+@section('title', 'Locacao - Locadora Prendatta')
 
 @section('content')
+    {{-- Detalhe da locacao: evidencia as chaves relacionadas e o valor calculado. --}}
     <div class="page-header">
         <div>
             <h1>Locacao #{{ $locacao->id }}</h1>

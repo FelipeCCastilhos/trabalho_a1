@@ -1,5 +1,6 @@
 @php($veiculo = $veiculo ?? null)
 
+{{-- Formulario parcial compartilhado por cadastro e edicao de veiculos. --}}
 <div class="field-row">
     <div class="field">
         <label for="marca">Marca</label>

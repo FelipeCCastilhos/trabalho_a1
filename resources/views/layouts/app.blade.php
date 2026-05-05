@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Locadora Prendatta')</title>
     <style>
+        /* Estilos centralizados no layout para dispensar Vite/Tailwind no trabalho. */
         :root {
             --bg: #f7f7f4;
             --panel: #ffffff;
@@ -232,9 +233,11 @@
     </style>
 </head>
 <body>
+    {{-- Layout base reaproveitado por todas as telas para manter navegacao e visual padronizados. --}}
     <header class="topbar">
         <div class="topbar-inner">
-            <a class="brand" href="{{ route('dashboard') }}">Locadora Rota Livre</a>
+            <a class="brand" href="{{ route('dashboard') }}">Locadora Prendatta</a>
+            {{-- Menu principal usa routeIs para marcar a area atual automaticamente. --}}
             <nav class="nav" aria-label="Menu principal">
                 <a href="{{ route('dashboard') }}" @class(['active' => request()->routeIs('dashboard')])>Dashboard</a>
                 <a href="{{ route('clientes.index') }}" @class(['active' => request()->routeIs('clientes.*')])>Clientes</a>
@@ -245,6 +248,7 @@
     </header>
 
     <main class="page">
+        {{-- Mensagens de feedback vindas dos controllers depois de salvar, editar ou excluir. --}}
         @if (session('success'))
             <div class="alert success">{{ session('success') }}</div>
         @endif
@@ -253,6 +257,7 @@
             <div class="alert error">{{ session('error') }}</div>
         @endif
 
+        {{-- Cada view filha injeta aqui seu conteudo especifico. --}}
         @yield('content')
     </main>
 </body>

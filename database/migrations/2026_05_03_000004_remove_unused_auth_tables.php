@@ -7,13 +7,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Remove tabelas antigas do esqueleto Laravel que nao fazem parte da locadora.
+        // Limpeza do esqueleto Laravel: o projeto nao tem tela de login,
+        // entao essas tabelas de usuario/reset nao sao utilizadas.
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('users');
     }
 
     public function down(): void
     {
-        // A aplicacao nao usa autenticacao, entao o rollback nao recria essas tabelas.
+        // Como autenticacao nao faz parte do escopo, o rollback nao recria essas tabelas.
     }
 };

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Estrutura padrao de filas do Laravel. Foi mantida porque o .env usa
+        // QUEUE_CONNECTION=database, evitando depender de servicos externos.
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
+            // queue permite separar tipos diferentes de tarefas, se forem criadas depois.
             $table->string('queue')->index();
             $table->longText('payload');
             $table->unsignedTinyInteger('attempts');
@@ -21,6 +24,7 @@ return new class extends Migration
             $table->unsignedInteger('created_at');
         });
 
+        // Jobs em lote; nao e usado diretamente nas telas, mas completa o suporte de filas.
         Schema::create('job_batches', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('name');
@@ -34,6 +38,7 @@ return new class extends Migration
             $table->integer('finished_at')->nullable();
         });
 
+        // Guarda falhas de jobs para diagnostico caso alguma tarefa em fila seja adicionada.
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();

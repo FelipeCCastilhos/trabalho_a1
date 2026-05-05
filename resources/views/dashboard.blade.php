@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard - Locadora Rota Livre')
+@section('title', 'Dashboard - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela inicial exigida no trabalho: resume a situacao operacional da locadora. --}}
     <div class="page-header">
         <div>
             <h1>Dashboard</h1>
@@ -13,6 +14,7 @@
         </div>
     </div>
 
+    {{-- Cards de indicadores tornam os totais principais visiveis sem abrir listagens. --}}
     <section class="grid stats">
         <div class="stat">
             <span class="muted">Clientes ativos</span>
@@ -37,6 +39,7 @@
     </section>
 
     <div class="grid two">
+        {{-- Lista curta para acompanhar movimentacoes recentes sem poluir o dashboard. --}}
         <section class="panel">
             <h2>Locacoes recentes</h2>
             @if ($locacoesRecentes->isEmpty())
@@ -65,6 +68,7 @@
             @endif
         </section>
 
+        {{-- Ajuda a localizar devolucoes vencendo ou atrasadas, que exigem acao da locadora. --}}
         <section class="panel">
             <h2>Devolucoes pendentes</h2>
             @if ($devolucoesPendentes->isEmpty())

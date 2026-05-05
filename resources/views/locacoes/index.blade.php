@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Locacoes - Locadora Rota Livre')
+@section('title', 'Locacoes - Locadora Prendatta')
 
 @section('content')
+    {{-- Listagem de locacoes: mostra o relacionamento entre cliente, veiculo e periodo. --}}
     <div class="page-header">
         <div>
             <h1>Locacoes</h1>
@@ -13,6 +14,7 @@
         </div>
     </div>
 
+    {{-- Filtros ajudam a encontrar contratos por cliente, placa, modelo ou status. --}}
     <div class="toolbar">
         <form class="search" method="GET" action="{{ route('locacoes.index') }}">
             <input type="search" name="busca" value="{{ $busca }}" placeholder="Buscar cliente, CPF, placa ou modelo">
@@ -29,6 +31,7 @@
         </form>
     </div>
 
+    {{-- A tabela exibe os dados principais para acompanhar reservas e devolucoes. --}}
     <section class="panel">
         <table>
             <thead>

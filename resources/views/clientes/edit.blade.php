@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Editar cliente - Locadora Rota Livre')
+@section('title', 'Editar cliente - Locadora Prendatta')
 
 @section('content')
+    {{-- Tela de edicao: reutiliza a validacao do controller e preenche os dados atuais. --}}
     <div class="page-header">
         <div>
             <h1>Editar cliente</h1>

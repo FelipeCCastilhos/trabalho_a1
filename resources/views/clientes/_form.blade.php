@@ -1,5 +1,6 @@
 @php($cliente = $cliente ?? null)
 
+{{-- Formulario parcial evita duplicacao entre cadastro e edicao de clientes. --}}
 <div class="field-row">
     <div class="field">
         <label for="nome">Nome</label>
@@ -40,6 +41,7 @@
 </div>
 
 <div class="field">
+    {{-- Hidden garante envio de "0" quando o checkbox de ativo estiver desmarcado. --}}
     <input type="hidden" name="ativo" value="0">
     <label class="checkbox-row">
         <input type="checkbox" name="ativo" value="1" @checked(old('ativo', $cliente->ativo ?? true))>

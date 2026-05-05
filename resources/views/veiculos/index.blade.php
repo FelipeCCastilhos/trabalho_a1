@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Veiculos - Locadora Rota Livre')
+@section('title', 'Veiculos - Locadora Prendatta')
 
 @section('content')
+    {{-- Listagem da frota: permite consultar carros e acessar acoes do CRUD. --}}
     <div class="page-header">
         <div>
             <h1>Veiculos</h1>
@@ -13,6 +14,7 @@
         </div>
     </div>
 
+    {{-- Busca por atributos visiveis do carro, como placa, marca e modelo. --}}
     <div class="toolbar">
         <form class="search" method="GET" action="{{ route('veiculos.index') }}">
             <input type="search" name="busca" value="{{ $busca }}" placeholder="Buscar por marca, modelo, placa ou categoria">
@@ -23,6 +25,7 @@
         </form>
     </div>
 
+    {{-- Status aparece em destaque porque define se o veiculo pode ser locado. --}}
     <section class="panel">
         <table>
             <thead>
