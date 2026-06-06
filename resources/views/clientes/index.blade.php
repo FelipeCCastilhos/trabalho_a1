@@ -54,11 +54,13 @@
                             <div class="actions">
                                 <a class="btn secondary" href="{{ route('clientes.show', $cliente) }}">Ver</a>
                                 <a class="btn secondary" href="{{ route('clientes.edit', $cliente) }}">Editar</a>
-                                <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('Excluir este cliente?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn danger" type="submit">Excluir</button>
-                                </form>
+                                @if (auth()->user()?->isAdmin())
+                                    <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('Excluir este cliente?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn danger" type="submit">Excluir</button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

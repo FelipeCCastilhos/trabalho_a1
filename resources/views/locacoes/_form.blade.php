@@ -49,6 +49,9 @@
         {{-- Status define se a locacao entra nas regras de conflito e limite ativo. --}}
         <select id="status" name="status" required>
             @foreach (\App\Models\Locacao::STATUS_LABELS as $valor => $label)
+                @if (auth()->user()?->isAtendente() && $valor === \App\Models\Locacao::STATUS_CANCELADA)
+                    @continue
+                @endif
                 <option value="{{ $valor }}" @selected(old('status', $locacao->status ?? \App\Models\Locacao::STATUS_RESERVADA) === $valor)>{{ $label }}</option>
             @endforeach
         </select>

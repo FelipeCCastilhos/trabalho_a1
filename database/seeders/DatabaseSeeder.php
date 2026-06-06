@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Cliente;
 use App\Models\Locacao;
+use App\Models\User;
 use App\Models\Veiculo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +19,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Usuarios iniciais para testar os dois perfis de acesso.
+        User::firstOrCreate(
+            ['email' => 'admin@prendatta.com'],
+            [
+                'name' => 'Administrador Prendatta',
+                'password' => Hash::make('password'),
+                'profile' => User::PROFILE_ADMIN,
+                'telefone' => '(11) 90000-0001',
+                'ativo' => true,
+            ],
+        );
+
+        User::firstOrCreate(
+            ['email' => 'atendente@prendatta.com'],
+            [
+                'name' => 'Atendente Prendatta',
+                'password' => Hash::make('password'),
+                'profile' => User::PROFILE_ATENDENTE,
+                'telefone' => '(11) 90000-0002',
+                'ativo' => true,
+            ],
+        );
+
         // Dados iniciais para a avaliacao abrir o sistema ja com cadastros reais.
         $ana = Cliente::firstOrCreate(
             ['cpf' => '123.456.789-10'],

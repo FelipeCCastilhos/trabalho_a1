@@ -73,8 +73,12 @@ class ClienteController extends Controller
         return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso.');
     }
 
-    public function destroy(Cliente $cliente): RedirectResponse
+    public function destroy(Request $request, Cliente $cliente): RedirectResponse
     {
+        if (! $request->user()?->isAdmin()) {
+            return back()->with('error', 'Apenas administradores podem excluir registros.');
+        }
+
         // Regra de negocio: nao apagar cliente que ja tem historico de locacoes.
         if ($cliente->locacoes()->exists()) {
             return back()->with('error', 'Nao e possivel excluir um cliente com locacoes vinculadas.');

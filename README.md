@@ -3,6 +3,8 @@ Aplicacao web em Laravel para gerenciamento simples de uma locadora de carros.
 
 ## Funcionalidades
 
+- Login e cadastro manual de usuarios com perfis.
+- Controle de acesso por perfil: administrador e atendente.
 - Dashboard com resumo de clientes ativos, veiculos, locacoes ativas, disponibilidade e receita finalizada.
 - CRUD de clientes.
 - CRUD de veiculos.
@@ -32,6 +34,19 @@ Relacionamentos:
 - Um cliente pode ter no maximo 2 locacoes ativas.
 - Veiculos em manutencao ou inativos nao podem ser locados.
 - Locacoes em andamento ou finalizadas nao podem ser excluidas.
+- Apenas administradores podem excluir registros.
+- Atendentes nao acessam rotas de veiculos.
+- Atendentes nao podem cancelar locacoes.
+
+## Perfis de acesso
+
+- `admin`: acesso total a Clientes, Veiculos, Locacoes e Usuarios.
+- `atendente`: acesso apenas a Clientes e Locacoes, sem permissao de exclusao.
+
+Usuarios criados pelo seeder:
+
+- Admin: `admin@prendatta.com` / senha `password`
+- Atendente: `atendente@prendatta.com` / senha `password`
 
 ## Requisitos
 
@@ -85,6 +100,8 @@ php artisan serve
 
 Acesse `http://127.0.0.1:8000`.
 
+Como as rotas internas usam autenticacao, o sistema redireciona usuarios nao logados para `/login`.
+
 ## Testes
 
 Para executar os testes automatizados:
@@ -92,3 +109,9 @@ Para executar os testes automatizados:
 ```bash
 php artisan test
 ```
+
+## Fazer o pull
+
+git add .
+git commit -m "mensagem"
+git push

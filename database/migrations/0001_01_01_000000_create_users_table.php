@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Esta tabela e usada pelo Laravel para guardar sessoes no SQLite,
-        // conforme SESSION_DRIVER=database no .env. Mesmo sem login, ela
-        // permite manter mensagens de sucesso/erro entre uma tela e outra.
+        // Apesar do nome historico do arquivo, esta migration ficou responsavel
+        // apenas por sessoes. A tabela users atual e criada em migration propria,
+        // com os campos de perfil exigidos pelo trabalho.
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            // user_id fica nulo porque o projeto nao tem autenticacao.
+            // user_id permite associar a sessao ao usuario logado; pode ficar nulo em visitas publicas.
             $table->unsignedBigInteger('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();

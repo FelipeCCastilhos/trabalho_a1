@@ -55,14 +55,24 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .nav a {
+        .nav a, .nav button {
             padding: 9px 12px;
             border-radius: 6px;
             color: #eef1ed;
             font-weight: 700;
             font-size: 14px;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
         }
-        .nav a.active, .nav a:hover { background: #384037; }
+        .nav a.active, .nav a:hover, .nav button:hover { background: #384037; }
+        .nav form { margin: 0; }
+        .user-chip {
+            color: #d8ddd6;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 9px 0;
+        }
         .page { padding: 28px 0 48px; }
         .page-header {
             display: flex;
@@ -237,12 +247,26 @@
     <header class="topbar">
         <div class="topbar-inner">
             <a class="brand" href="{{ route('dashboard') }}">Locadora Prendatta</a>
-            {{-- Menu principal usa routeIs para marcar a area atual automaticamente. --}}
+            {{-- Menu adaptado por perfil: admin ve tudo; atendente ve apenas Clientes e Locacoes. --}}
             <nav class="nav" aria-label="Menu principal">
-                <a href="{{ route('dashboard') }}" @class(['active' => request()->routeIs('dashboard')])>Dashboard</a>
-                <a href="{{ route('clientes.index') }}" @class(['active' => request()->routeIs('clientes.*')])>Clientes</a>
-                <a href="{{ route('veiculos.index') }}" @class(['active' => request()->routeIs('veiculos.*')])>Veiculos</a>
-                <a href="{{ route('locacoes.index') }}" @class(['active' => request()->routeIs('locacoes.*')])>Locacoes</a>
+                @auth
+                    <span class="user-chip">{{ auth()->user()->name }} | {{ \App\Models\User::PROFILE_LABELS[auth()->user()->profile] ?? auth()->user()->profile }}</span>
+                    <a href="{{ route('clientes.index') }}" @class(['active' => request()->routeIs('clientes.*')])>Clientes</a>
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('veiculos.index') }}" @class(['active' => request()->routeIs('veiculos.*')])>Veiculos</a>
+                    @endif
+                    <a href="{{ route('locacoes.index') }}" @class(['active' => request()->routeIs('locacoes.*')])>Locacoes</a>
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('usuarios.index') }}" @class(['active' => request()->routeIs('usuarios.*')])>Usuarios</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit">Sair</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" @class(['active' => request()->routeIs('login')])>Login</a>
+                    <a href="{{ route('register') }}" @class(['active' => request()->routeIs('register')])>Cadastro</a>
+                @endauth
             </nav>
         </div>
     </header>

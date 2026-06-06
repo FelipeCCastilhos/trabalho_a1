@@ -68,8 +68,12 @@ class VeiculoController extends Controller
         return redirect()->route('veiculos.index')->with('success', 'Veiculo atualizado com sucesso.');
     }
 
-    public function destroy(Veiculo $veiculo): RedirectResponse
+    public function destroy(Request $request, Veiculo $veiculo): RedirectResponse
     {
+        if (! $request->user()?->isAdmin()) {
+            return back()->with('error', 'Apenas administradores podem excluir registros.');
+        }
+
         // Regra de negocio: preservar historico de locacoes do veiculo.
         if ($veiculo->locacoes()->exists()) {
             return back()->with('error', 'Nao e possivel excluir um veiculo com locacoes vinculadas.');

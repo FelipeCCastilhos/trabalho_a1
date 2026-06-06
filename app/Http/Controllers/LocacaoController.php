@@ -49,6 +49,13 @@ class LocacaoController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validatedData($request);
+
+        if ($this->atendenteTentouCancelar($request, $data)) {
+            return back()
+                ->withErrors(['status' => 'Apenas administradores podem cancelar locações.'])
+                ->withInput();
+        }
+
         $this->validateBusinessRules($data);
         $data = $this->withFinancialData($data);
 
@@ -72,6 +79,13 @@ class LocacaoController extends Controller
     public function update(Request $request, Locacao $locacao): RedirectResponse
     {
         $data = $this->validatedData($request, $locacao);
+
+        if ($this->atendenteTentouCancelar($request, $data)) {
+            return back()
+                ->withErrors(['status' => 'Apenas administradores podem cancelar locações.'])
+                ->withInput();
+        }
+
         $this->validateBusinessRules($data, $locacao);
         $data = $this->withFinancialData($data);
 
@@ -80,8 +94,12 @@ class LocacaoController extends Controller
         return redirect()->route('locacoes.index')->with('success', 'Locacao atualizada com sucesso.');
     }
 
-    public function destroy(Locacao $locacao): RedirectResponse
+    public function destroy(Request $request, Locacao $locacao): RedirectResponse
     {
+        if (! $request->user()?->isAdmin()) {
+            return back()->with('error', 'Apenas administradores podem excluir registros.');
+        }
+
         // Regra de negocio: locacao em andamento/finalizada deve ficar no historico.
         if (in_array($locacao->status, [Locacao::STATUS_EM_ANDAMENTO, Locacao::STATUS_FINALIZADA], true)) {
             return back()->with('error', 'Somente locacoes reservadas ou canceladas podem ser excluidas.');
@@ -158,6 +176,12 @@ class LocacaoController extends Controller
         if ($errors !== []) {
             throw ValidationException::withMessages($errors);
         }
+    }
+
+    private function atendenteTentouCancelar(Request $request, array $data): bool
+    {
+        return $request->user()?->isAtendente()
+            && $data['status'] === Locacao::STATUS_CANCELADA;
     }
 
     private function vehicleHasConflict(array $data, ?Locacao $locacao = null): bool
