@@ -265,7 +265,6 @@
                     </form>
                 @else
                     <a href="{{ route('login') }}" @class(['active' => request()->routeIs('login')])>Login</a>
-                    <a href="{{ route('register') }}" @class(['active' => request()->routeIs('register')])>Cadastro</a>
                 @endauth
             </nav>
         </div>

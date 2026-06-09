@@ -3,10 +3,10 @@
 @section('title', 'Cadastro - Locadora Prendatta')
 
 @section('content')
-    {{-- Cadastro manual de usuario: senha e perfil sao validados no AuthController. --}}
+    {{-- Cadastro manual de usuario: somente admin acessa esta tela via middleware profile:admin. --}}
     <div class="page-header">
         <div>
-            <h1>{{ auth()->check() ? 'Novo usuario' : 'Cadastro' }}</h1>
+            <h1>Novo usuario</h1>
             <p class="muted">Crie um acesso com perfil de administrador ou atendente.</p>
         </div>
     </div>
@@ -59,7 +59,7 @@
 
             <div class="actions">
                 <button class="btn primary" type="submit">Salvar usuario</button>
-                <a class="btn secondary" href="{{ auth()->check() ? route('usuarios.index') : route('login') }}">Cancelar</a>
+                <a class="btn secondary" href="{{ route('usuarios.index') }}">Cancelar</a>
             </div>
         </form>
     </section>

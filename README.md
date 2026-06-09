@@ -3,7 +3,7 @@ Aplicacao web em Laravel para gerenciamento simples de uma locadora de carros.
 
 ## Funcionalidades
 
-- Login e cadastro manual de usuarios com perfis.
+- Login manual e cadastro de usuarios feito somente por administradores.
 - Controle de acesso por perfil: administrador e atendente.
 - Dashboard com resumo de clientes ativos, veiculos, locacoes ativas, disponibilidade e receita finalizada.
 - CRUD de clientes.
@@ -42,6 +42,7 @@ Relacionamentos:
 
 - `admin`: acesso total a Clientes, Veiculos, Locacoes e Usuarios.
 - `atendente`: acesso apenas a Clientes e Locacoes, sem permissao de exclusao.
+- Apenas usuario `admin` logado consegue abrir `/register` para criar novos usuarios.
 
 Usuarios criados pelo seeder:
 

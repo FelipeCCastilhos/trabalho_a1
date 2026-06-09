@@ -111,6 +111,23 @@ class LocacaoBusinessRulesTest extends TestCase
         ]);
     }
 
+    public function test_cadastro_de_usuario_nao_fica_publico(): void
+    {
+        $response = $this->get(route('register'));
+
+        $response->assertRedirect(route('login'));
+    }
+
+    public function test_apenas_admin_abre_cadastro_de_usuario(): void
+    {
+        $this->actingAs($this->atendente());
+
+        $response = $this->get(route('register'));
+
+        $response->assertRedirect(route('dashboard'));
+        $response->assertSessionHas('error', 'Acesso restrito a administradores.');
+    }
+
     private function admin(): User
     {
         return User::create([

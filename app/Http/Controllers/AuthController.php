@@ -46,23 +46,15 @@ class AuthController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
-    public function showRegister(Request $request): View|RedirectResponse
+    public function showRegister(): View
     {
-        // Atendente logado nao pode abrir cadastro de usuario para criar outro perfil.
-        if ($request->user() && ! $request->user()->isAdmin()) {
-            return redirect()->route('dashboard')->with('error', 'Acesso restrito a administradores.');
-        }
-
+        // Esta tela so e aberta por admin, pois a rota usa auth + profile:admin.
         return view('register');
     }
 
     public function register(Request $request): RedirectResponse
     {
-        // A mesma protecao vale para o POST, caso alguem tente enviar direto pela URL.
-        if ($request->user() && ! $request->user()->isAdmin()) {
-            return redirect()->route('dashboard')->with('error', 'Acesso restrito a administradores.');
-        }
-
+        // O middleware profile:admin impede cadastro publico ou por atendente.
         $data = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:120'],
             'email' => ['required', 'email', 'max:120', Rule::unique('users', 'email')],
@@ -72,7 +64,7 @@ class AuthController extends Controller
         ]);
 
         // Hash::make garante que a senha nunca seja gravada em texto puro.
-        $user = User::create([
+        User::create([
             'name' => $data['name'],
             'email' => strtolower($data['email']),
             'password' => Hash::make($data['password']),
@@ -81,16 +73,7 @@ class AuthController extends Controller
             'ativo' => true,
         ]);
 
-        // Se o admin ja esta logado, ele esta apenas cadastrando outro usuario.
-        if ($request->user()) {
-            return redirect()->route('usuarios.index')->with('success', 'Usuario cadastrado com sucesso.');
-        }
-
-        // Primeiro cadastro publico entra automaticamente no sistema.
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->route('dashboard')->with('success', 'Cadastro realizado com sucesso.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario cadastrado com sucesso.');
     }
 
     public function logout(Request $request): RedirectResponse

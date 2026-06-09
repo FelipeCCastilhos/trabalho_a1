@@ -36,7 +36,6 @@
 
             <div class="actions">
                 <button class="btn primary" type="submit">Entrar</button>
-                <a class="btn secondary" href="{{ route('register') }}">Criar usuario</a>
             </div>
         </form>
     </section>

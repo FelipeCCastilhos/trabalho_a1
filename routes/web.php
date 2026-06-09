@@ -8,11 +8,9 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VeiculoController;
 use Illuminate\Support\Facades\Route;
 
-// Rotas publicas de autenticacao manual, sem Breeze/Jetstream.
+// Rotas publicas apenas para login manual, sem Breeze/Jetstream.
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.store');
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
@@ -31,7 +29,9 @@ Route::middleware('auth')->group(function () {
 
     // Veiculos e usuarios sao areas administrativas.
     Route::resource('veiculos', VeiculoController::class)->middleware('profile:admin');
-    Route::get('usuarios', [UsuarioController::class, 'index'])
-        ->middleware('profile:admin')
-        ->name('usuarios.index');
+    Route::middleware('profile:admin')->group(function () {
+        Route::get('usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+        Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+        Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+    });
 });
